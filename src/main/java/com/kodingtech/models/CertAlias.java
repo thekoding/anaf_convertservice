@@ -1,4 +1,4 @@
-package com.kodingtech;
+package com.kodingtech.models;
 
 import java.security.cert.X509Certificate;
 

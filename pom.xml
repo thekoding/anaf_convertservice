@@ -144,6 +144,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>pdfxfa</artifactId>
+            <version>${itext.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>ro.anaf</groupId>
             <artifactId>validator</artifactId>
             <version>1.0</version>

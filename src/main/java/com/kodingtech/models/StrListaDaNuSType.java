@@ -5,45 +5,42 @@
 // Generated on: 2020.02.10 at 02:15:21 PM EET 
 //
 
-
-package com.kodingtech;
+package com.kodingtech.models;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for Str_listaDecontSType.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for Str_listaDaNuSType.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
- * &lt;simpleType name="Str_listaDecontSType">
+ * &lt;simpleType name="Str_listaDaNuSType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *     &lt;maxLength value="1"/>
- *     &lt;enumeration value="L"/>
- *     &lt;enumeration value="T"/>
- *     &lt;enumeration value="S"/>
- *     &lt;enumeration value="A"/>
+ *     &lt;enumeration value="D"/>
+ *     &lt;enumeration value="N"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 
  */
-@XmlType(name = "Str_listaDecontSType")
+@XmlType(name = "Str_listaDaNuSType")
 @XmlEnum
-public enum StrListaDecontSType {
+public enum StrListaDaNuSType {
 
-    L,
-    T,
-    S,
-    A;
+    D, N;
 
     public String value() {
         return name();
     }
 
-    public static StrListaDecontSType fromValue(String v) {
+    public static StrListaDaNuSType fromValue(String v) {
         return valueOf(v);
     }
 

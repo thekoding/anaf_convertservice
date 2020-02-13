@@ -21,24 +21,24 @@ import pdf.PdfCreation;
 import pdf.Sign;
 
 import com.microsoft.azure.functions.annotation.*;
-import com.kodingtech.models.Declaratie300Type;
+import com.kodingtech.models.Declaratie390Type;
 import com.microsoft.azure.functions.*;
 
 /**
  * Azure Functions with HTTP Trigger.
  */
-public class GenerateD300 {
+public class GenerateD390 {
 
     /**
-     * This function listens at endpoint "/api/generated300". Two ways to invoke it
+     * This function listens at endpoint "/api/generated390". Two ways to invoke it
      * using "curl" command in bash: 1. curl -d "HTTP Body" {your host}/api/FillPdf
      * 2. curl {your host}/api/FillPdf?name=HTTP%20Query
      */
-    @FunctionName("generated300")
+    @FunctionName("generated390")
     public HttpResponseMessage run(@HttpTrigger(name = "req", methods = {
-            HttpMethod.POST }, authLevel = AuthorizationLevel.FUNCTION) HttpRequestMessage<Optional<Declaratie300Type>> request,
+            HttpMethod.POST }, authLevel = AuthorizationLevel.FUNCTION) HttpRequestMessage<Optional<Declaratie390Type>> request,
             final ExecutionContext context) {
-        context.getLogger().info("Started generating D300 report.");
+        context.getLogger().info("Started generating D390 report.");
 
         // Parse query parameter0
         boolean hasBody = request.getBody().isPresent();
@@ -46,9 +46,9 @@ public class GenerateD300 {
             return Utils.badRequest(request, 1, "No request body was found. Please provide a request body.");
         }
 
-        Declaratie300Type d300 = request.getBody().get();
-        String base64key = d300.getKey();
-        String keyPassword = d300.getKeyPassword();
+        Declaratie390Type d390 = request.getBody().get();
+        String base64key = d390.getKey();
+        String keyPassword = d390.getKeyPassword();
 
         String fileName = Utils.getAlphabeticalString(10);
         String xmlPath = fileName + ".xml";
@@ -66,15 +66,15 @@ public class GenerateD300 {
 
             xml.createNewFile();
 
-            JAXBContext jaxbContext = JAXBContext.newInstance(Declaratie300Type.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(Declaratie390Type.class);
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            marshaller.marshal(d300, xml);
+            marshaller.marshal(d390, xml);
 
             String errorMessage = "";
 
-            Validation validator = new d300validator.Validator();
-            PdfCreation creator = new d300.PdfCreator();
+            Validation validator = new d390validator.Validator();
+            PdfCreation creator = new d390.PdfCreator();
 
             int retCode = validator.parseDocument(xmlPath, errPath);
             String finalPdfPath = null;

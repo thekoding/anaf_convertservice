@@ -1,4 +1,4 @@
-package com.kodingtech;
+package com.kodingtech.models;
 
 public class RequestBody {
     private String pdf;

@@ -5,7 +5,7 @@
 // Generated on: 2020.02.13 at 10:24:33 AM EET 
 //
 
-package com.kodingtech.models;
+package com.kodingtech.models.D390;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

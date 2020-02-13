@@ -21,7 +21,7 @@ import pdf.PdfCreation;
 import pdf.Sign;
 
 import com.microsoft.azure.functions.annotation.*;
-import com.kodingtech.models.Declaratie300Type;
+import com.kodingtech.models.D300.Declaratie300Type;
 import com.microsoft.azure.functions.*;
 
 /**

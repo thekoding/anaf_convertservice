@@ -5,7 +5,7 @@
 // Generated on: 2020.02.10 at 02:15:21 PM EET 
 //
 
-package com.kodingtech.models;
+package com.kodingtech.models.D300;
 
 import java.math.BigInteger;
 import javax.xml.bind.annotation.XmlAccessType;

@@ -15,6 +15,14 @@
       "label": "package",
       "command": "mvn clean package",
       "type": "shell"
+    },
+    {
+      "type": "func",
+      "command": "extensions install",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
     }
   ]
 }

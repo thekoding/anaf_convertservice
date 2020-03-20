@@ -9,6 +9,9 @@ import java.util.*;
 import com.microsoft.azure.functions.annotation.*;
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.xfa.XfaForm;
+import com.itextpdf.text.exceptions.UnsupportedPdfException;
+import com.itextpdf.text.pdf.PRStream;
+import com.itextpdf.text.pdf.PdfObject;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -16,13 +19,17 @@ import com.itextpdf.kernel.pdf.StampingProperties;
 import com.kodingtech.models.RequestBody;
 import com.microsoft.azure.functions.*;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 /**
  * Azure Functions with HTTP Trigger.
  */
-public class FillPdf {
+public class GetAttachments {
 
     /**
-     * This function listens at endpoint "/api/fillPdf". Two ways to invoke it using
+     * This function listens at endpoint "/api/GetAttachments". Two ways to invoke it using
      * "curl" command in bash: 1. curl -d "HTTP Body" {your host}/api/FillPdf 2.
      * curl {your host}/api/FillPdf?name=HTTP%20Query
      */
@@ -47,41 +54,38 @@ public class FillPdf {
         }
 
         try {
-            String base64xml = body.getXml();
-            if (base64xml == null) {
-                return Utils.badRequest(request, 200,
-                        "No XML field was found in the request body. Please provide a base64-encoded XML file.");
-            }
-
+            
             byte[] decodedPdfBytes = Base64.getDecoder().decode(base64pdf);
-            byte[] decodedXmlBytes = Base64.getDecoder().decode(base64xml);
-
-            ByteArrayInputStream xmlStream = new ByteArrayInputStream(decodedXmlBytes);
+        
             ByteArrayInputStream pdfStream = new ByteArrayInputStream(decodedPdfBytes);
             ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
 
             PdfReader reader = new PdfReader(pdfStream);
-
-            PdfDocument doc = new PdfDocument(reader, new PdfWriter(pdfOutputStream),
-                    new StampingProperties().useAppendMode());
-
-            XfaForm xfa = PdfAcroForm.getAcroForm(doc, false).getXfaForm();
-            if (xfa == null) {
-                context.getLogger().severe("No form found in PDF with the following base64: " + base64pdf);
-                return Utils.badRequest(request, 101,
-                        "No form found in the given PDF. Please make sure you have supplied a valid PDF.");
+            PdfObject obj;
+            PdfDocument doc = new PdfDocument(reader);
+            byte[] byteArray;
+            for (int i = 1; i <= pdfDoc.getNumberOfPdfObjects(); i++) {
+                obj = pdfDoc.getPdfObject(i);
+                if (obj != null && obj.isStream()) {
+                    
+                    try {
+                        byteArray = ((PdfStream) obj).getBytes();
+                    } catch (PdfException exc) {
+                        byteArray = ((PdfStream) obj).getBytes(false);
+                    }
+                    
+                }
             }
-
             xfa.fillXfaForm(xmlStream);
             xfa.write(doc);
 
             doc.close();
             reader.close();
 
-            byte[] encodedPdfBytes = Base64.getEncoder().encode(pdfOutputStream.toByteArray());
-            String encodedPdf = new String(encodedPdfBytes);
+            byte[] encodedAttachmentBytes = Base64.getEncoder().encode(byteArray);
+            String encodedAttachments = new String(encodedPdfBytes);
 
-            return request.createResponseBuilder(HttpStatus.OK).body(encodedPdf).build();
+            return request.createResponseBuilder(HttpStatus.OK).body(encodedAttachments).build();
 
         } catch (IOException e) {
             context.getLogger().severe("Failed reading decoded PDF with the following base64: " + base64pdf);

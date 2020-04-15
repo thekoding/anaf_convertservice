@@ -3,7 +3,6 @@ package com.kodingtech;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.URLDecoder;
 import java.util.*;
 
 import com.microsoft.azure.functions.annotation.*;
@@ -56,7 +55,10 @@ public class FillPdf {
             byte[] decodedPdfBytes = Base64.getDecoder().decode(base64pdf);
             byte[] decodedXmlBytes = Base64.getDecoder().decode(base64xml);
 
-            ByteArrayInputStream xmlStream = new ByteArrayInputStream(decodedXmlBytes);
+            String xml = new String(decodedXmlBytes);
+            xml = xml.replace("&", "&amp;");
+
+            ByteArrayInputStream xmlStream = new ByteArrayInputStream(xml.getBytes());
             ByteArrayInputStream pdfStream = new ByteArrayInputStream(decodedPdfBytes);
             ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
 

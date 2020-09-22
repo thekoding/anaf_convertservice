@@ -66,8 +66,10 @@ public class FillPdf {
 
             PdfDocument doc = new PdfDocument(reader, new PdfWriter(pdfOutputStream),
                     new StampingProperties().useAppendMode());
-
-            XfaForm xfa = PdfAcroForm.getAcroForm(doc, false).getXfaForm();
+            PdfAcroForm acroForm = PdfAcroForm.getAcroForm(doc, true);
+            acroForm.setSignatureFlags(PdfAcroForm.SIGNATURE_EXIST | PdfAcroForm.APPEND_ONLY);
+            
+            XfaForm xfa = acroForm.getXfaForm();
             if (xfa == null) {
                 context.getLogger().severe("No form found in PDF with the following base64: " + base64pdf);
                 return Utils.badRequest(request, 101,

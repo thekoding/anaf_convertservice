@@ -17,7 +17,7 @@
         <azure.functions.java.library.version>1.3.0</azure.functions.java.library.version>
         <functionAppName>ey_fillpdf</functionAppName>
         <functionAppRegion>westus</functionAppRegion>
-        <itext.version>RELEASE</itext.version>
+        <itext.version>7.2.0</itext.version>
         <stagingDirectory>${project.build.directory}/azure-functions/${functionAppName}</stagingDirectory>
         <functionResourceGroup>java-functions-group</functionResourceGroup>
     </properties>
